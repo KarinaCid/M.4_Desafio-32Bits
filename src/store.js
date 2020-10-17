@@ -14,7 +14,17 @@ const store = new Vuex.Store({
     {id: "0005", name: "Bloodborne", stock: 100, price: 10000, color: "blue", outstanding: false},
     {id: "0006", name: "Forza Horizon 4", stock: 100, price: 20000, color: "red", outstanding: true}]
   },
-  getters: {},
+  getters: {
+    availableGames(state) {
+      return  state.games.filter (game => game.stock > 0); 
+    },
+    searchById: (_state, getters) => (id) => {
+      return getters.availableGames.filter (game => game.id == id)
+    },
+    totalStock (state) {
+      return state.games.reduce((acc, game) => acc + game.stock, 0)
+    }
+  },
   mutations: {},
   actions: {}
 });
